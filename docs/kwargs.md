@@ -1,7 +1,11 @@
+---
+layout: default
+permalink: docs/kwargs.html
+---
 
-## Keyword Arguments
+# Keyword Arguments
 
- Stylus supports keyword arguments, or "kwargs". These allow you to reference arguents by their associated parameter name.
+ Stylus supports keyword arguments, or "kwargs". These allow you to reference arguments by their associated parameter name.
 
  The examples shown below are functionally equivalent. However, we can
  place keyword arguments anywhere within the list. The remaining arguments

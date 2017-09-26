@@ -4,13 +4,17 @@
 .travis.yml
 
 History.md
+Workflow.md
+Code_of_Conduct.md
+Contributing.md
 Makefile
+
+bm.js
 
 docs/
 editors/
-examples/
 test/
-logos/
+graphics/
 
 coverage.html
 lib-cov

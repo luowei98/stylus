@@ -1,5 +1,9 @@
+---
+layout: default
+permalink: docs/iteration.html
+---
 
-## Iteration
+# Iteration
 
  Stylus allows you to iterate expressions via the `for/in` construct, taking the form of:
  
@@ -34,7 +38,23 @@ Yielding:
           foo: 2 sans-serif;
         }
 
-### Mixins
+And here's how you do a regular for loop
+
+    body
+      for num in (1..5)
+        foo num
+
+Yields:
+
+    body {
+      foo: 1;
+      foo: 2;
+      foo: 3;
+      foo: 4;
+      foo: 5;
+    }
+              
+## Mixins
 
  We can use iteration within mixins to produce powerful functionality. For example, we can apply expression pairs as properties using interpolation and iteration. 
  
@@ -52,7 +72,7 @@ Yielding:
        list = (one 1) (two 2) (three 3)
        apply(list)
 
-### Functions
+## Functions
 
  Stylus functions may also contain for-loops. Below are some example use-cases:
 
@@ -79,7 +99,7 @@ join:
       join(', ', foo bar baz)
       // => "foo, bar, baz"
 
-### Postfix
+## Postfix
 
  Much like `if` / `unless` may be utilized post-statement, the same can be done with `for`. Below are the same examples as above utilizing the postfix syntax:
  

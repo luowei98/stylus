@@ -1,10 +1,14 @@
+---
+layout: default
+permalink: docs/extend.html
+---
 
-## Extend
+# @extend
 
   The Stylus __@extend__ directive is inspired by (and essentially the same as) the [SASS Implementation](http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#extend), with few subtle differences. This feature significantly simplifies maintenance of semantic rulesets that inherit from other semantic rulesets.
 
 
-### “Extending” with mixins
+## “Extending” with mixins
 
   Although you can use mixins to achieve a similar effect, this can lead to duplicate CSS. A typical pattern is to define several classes as shown below, then combine them on the element such as "warning message". 
   
@@ -21,9 +25,9 @@
       }
 
 
-### Using `__@extend__`
+## Using __`@extend`__
 
-  To produce this same output with `__@extend__`, simply pass it the desired selector.  Stylus will then append the `.warning` selector to the existing `.message` ruleset.  The `.warning` class then inherits properties from `.message`.
+  To produce this same output with __`@extend`__, simply pass it the desired selector (note that `@extend` and `@extends` are equal, one is just an alias of another).  Stylus will then append the `.warning` selector to the existing `.message` ruleset.  The `.warning` class then inherits properties from `.message`.
 
       .message {
         padding: 10px;
@@ -36,7 +40,7 @@
       }
 
 
-  Here's a more complex example, demonstrating how `__@extend__` cascades:
+  Here's a more complex example, demonstrating how __`@extend`__ cascades:
   
       red = #E33E1E
       yellow = #E2E21E
@@ -85,7 +89,7 @@
         color: #e33e1e;
       }
 
-  Where Stylus currently differs from SASS is, SASS won't allow  `__@extend__` nested selectors:
+  Where Stylus currently differs from SASS is, SASS won't allow  __`@extend`__ nested selectors:
   
      form
        button
@@ -112,7 +116,7 @@
    Yielding:
    
         form input[type=text],
-        form textarea {
+        textarea {
           padding: 5px;
           border: 1px solid #eee;
           color: #ddd;
@@ -121,3 +125,79 @@
           padding: 10px;
         }
       
+## Extending multiple selectors
+
+Stylus allows you to extend multiple selectors at once, just write them with the comma:
+
+    .a
+      color: red
+
+    .b
+      width: 100px
+
+    .c
+      @extend .a, .b
+      height: 200px
+
+Yielding:
+
+
+    .a,
+    .c {
+      color: #f00;
+    }
+    .b,
+    .c {
+      width: 100px;
+    }
+    .c {
+      height: 200px;
+    }
+
+## Extending placeholder selectors
+
+Stylus has a feature similar to the one in [Sass](http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#placeholders) — placeholder selectors.
+
+Those selectors should start with a `$` symbol (for example, `$foo`), and are not yielded in the resulting CSS. But you can still extend them:
+
+    $foo
+      color: #FFF
+
+    $foo2
+      color: red
+
+    .bar
+      background: #000
+      @extends $foo
+
+    .baz
+      @extends $foo
+
+
+Yielding:
+
+    .bar,
+    .baz {
+      color: #fff;
+    }
+    .bar {
+      background: #000;
+    }
+
+Note that if the selector is not extended, it won't be in the resulting CSS, so it's a powerful way to create a library of extendable code. While you can insert code through mixins, they would insert the same code every time you use them, while extending placeholders would give you compact output.
+
+## Optional extending
+
+Sometimes it might be usefull to be able to extend something that might exists or not depending on the context. You can suffix any selector by `!optional` to achieve this:
+
+    $specialDesign
+      color: #FFF
+
+    .btn
+      @extend .design !optional, $specialDesign !optional
+
+Yielding:
+
+    .btn {
+      color: #fff;
+    }
